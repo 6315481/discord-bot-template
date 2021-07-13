@@ -17,5 +17,8 @@ async def on_command_error(ctx, error):
 async def ping(ctx):
     await ctx.send('peng')
 
+@bot.command()
+async def on_message(message):
+    print (message)
 
 bot.run(token)
