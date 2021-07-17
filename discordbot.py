@@ -19,11 +19,23 @@ async def ping(ctx):
 
 @bot.event
 async def on_message(message):
-    if message.author.voice is None:
-        await message.channel.send("あなたはボイチャにいませんで")
+    if message.author.bot:
         return
     
-    await message.author.voice.channel.connect()
-    await message.channel.send("接続しました")
+    if message.content == '!join':
+        if message.author.voice is None:
+            await message.channel.send("あなたはボイチャにいませんで")
+            return
+    
+        await message.author.voice.channel.connect()
+        await message.channel.send("接続しました")
+    
+    elif message.content == '!leave':
+        if message.guild.voice_client is None:
+            await message.channel.send("接続していません")
+        
+        await message.guild.voice_client.disconnect()
+        await message.channel.send("切断しました")
+
 
 bot.run(token)
