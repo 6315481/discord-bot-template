@@ -19,6 +19,11 @@ async def ping(ctx):
 
 @bot.event
 async def on_message(message):
-    print (message)
+    if message.author.voice is None:
+        await message.channel.send("あなたはボイチャにいませんで")
+        return
+    
+    await message.author.voice.channel.connect()
+    await message.channel.send("接続しました")
 
 bot.run(token)
